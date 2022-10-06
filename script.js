@@ -1,10 +1,11 @@
 displayNotes();
-important();
 
 
 let addbtn = document.getElementById(`addBtn`)
 addbtn.addEventListener(`click`, function (e) {
     let addTxt = document.getElementById(`addText`);
+    let addTitle = document.getElementById(`addTitle`);
+
     let notes = localStorage.getItem(`notes`);
     if (notes == null) {
         notesobj = [];
@@ -12,10 +13,16 @@ addbtn.addEventListener(`click`, function (e) {
     else {
         notesobj = JSON.parse(notes);
     }
-    notesobj.push(addTxt.value);
+    let myobj = {
+        Title: addTitle.value,
+        Text: addTxt.value
+    }
+    notesobj.push(myobj);
+    
     localStorage.setItem('notes', JSON.stringify(notesobj));
+    addTitle.value="";
     addTxt.value = "";
-    console.log(notesobj)
+    
 
     displayNotes();
 })
@@ -29,15 +36,17 @@ function displayNotes() {
     else {
         notesobj = JSON.parse(notes);
     }
+    console.log(notesobj)
+
     let html = ``;
 
-    notesobj.forEach((element, index) => {
-        let todayDate= new Date();
+    Array.from(notesobj).forEach((element, index) => {
+       
         
         html += `<div class="notecard mx-2 my-2" style="width: 18rem;">
         <div class="card-body">
-        <h5 class="card-title">Date : ${todayDate} </h5>
-        <p class="card-text" id ="para${index}">${element}</p>
+        <h5 class="card-title"> ${element.Title} </h5>
+        <p class="card-text" id ="para${index}">${element.Text}</p>
         <button id="${index}" onclick="important(this.id)" class="btn btn-primary ">Important</button>
          <button id="${index}" onclick="deleteNotes(this.id)" class="btn btn-primary ">Delete</button>
          
