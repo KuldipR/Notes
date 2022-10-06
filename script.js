@@ -65,7 +65,7 @@ function displayNotes() {
 }
 
 function deleteNotes(index) {
-    console.log(`I am deleting note`, index);
+    // console.log(`I am deleting note`, index);
     let notes = localStorage.getItem(`notes`);
     if (notes == null) {
         notesobj = [];
@@ -89,8 +89,9 @@ search.addEventListener(`input`, function () {
     // console.log(noteCards);
     Array.from(noteCards).forEach(function (element) {
           let cardTxt = element.getElementsByTagName("p")[0].innerText;
+          let cardTitle = element.getElementsByTagName(`h5`)[0].innerText;
 
-        if (cardTxt.includes(inputVal)) {
+        if (cardTxt.includes(inputVal) || cardTitle.includes(inputVal)) {
             element.style.display = "block"
         }
         else {
@@ -102,7 +103,7 @@ search.addEventListener(`input`, function () {
 })
 
 function important (index){
-    console.log(index);
+    // console.log(index);
     let notes = localStorage.getItem(`notes`);
     if (notes == null) {
         notesobj = [];
@@ -117,7 +118,7 @@ function important (index){
         }
 
     })
-    console.log(notesobj)
+    // console.log(notesobj)
     
     
     localStorage.setItem('notes', JSON.stringify(notesobj));
