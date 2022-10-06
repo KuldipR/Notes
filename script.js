@@ -15,7 +15,8 @@ addbtn.addEventListener(`click`, function (e) {
     }
     let myobj = {
         Title: addTitle.value,
-        Text: addTxt.value
+        Text: addTxt.value,
+        important: false
     }
     notesobj.push(myobj);
     
@@ -41,9 +42,9 @@ function displayNotes() {
     let html = ``;
 
     Array.from(notesobj).forEach((element, index) => {
-       
+   
         
-        html += `<div class="notecard mx-2 my-2" style="width: 18rem;">
+        html += `<div class="notecard mx-2 my-2 ${element.important===true ? "red" :"" } " style="width: 18rem;">
         <div class="card-body">
         <h5 class="card-title"> ${element.Title} </h5>
         <p class="card-text" id ="para${index}">${element.Text}</p>
@@ -101,13 +102,37 @@ search.addEventListener(`input`, function () {
 })
 
 function important (index){
-    // console.log(index)
-//     console.log(`Important`,index);
-  let  imp = document.getElementById(`para${index}`);
-  console.log(imp)
+    console.log(index);
+    let notes = localStorage.getItem(`notes`);
+    if (notes == null) {
+        notesobj = [];
+    }
+    else {
+        notesobj = JSON.parse(notes);
+    }
+
+    Array.from(notesobj).forEach((element, i) => {
+        if(i == index){
+            element.important = true;
+        }
+
+    })
+    console.log(notesobj)
+    
+    
+    localStorage.setItem('notes', JSON.stringify(notesobj));
+    
+    
+
+    displayNotes();
+//   let  imp = document.getElementById(`para${index}`);
+//   console.log(imp)
 //   imp.className += ` red`;
   
-  imp.classList.add("red");
-  localStorage.setItem(imp.ClassList, `red`);
+//   imp.classList.add("red");
+//     const newData = {
+//         important: true
+//     }
+//     notesobj[index] = 
 
 }
